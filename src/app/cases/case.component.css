@@ -1,0 +1,98 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+header {
+  background-color: #012a5b; /* Primary color */
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filters {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+  gap: 10px;
+}
+
+.filters select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.summary-metrics {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin: 20px;
+  gap: 20px;
+}
+
+.metric {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: calc(25% - 40px);
+  min-width: 150px;
+}
+
+.metric h3 {
+  margin: 0 0 10px;
+  color: #012a5b; /* Primary color */
+}
+
+.metric p {
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+.metric.open p {
+  color: red;
+}
+
+.metric.closed p {
+  color: green;
+}
+
+.metric .trend {
+  font-size: 0.8em;
+  color: #012a5b; /* Primary color */
+}
+
+.cases-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cases-table th, .cases-table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.cases-table th {
+  background-color: #012a5b; /* Primary color */
+  color: white;
+}
+
+.cases-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.cases-table tr:hover {
+  background-color: #f1f1f1;
+}
