@@ -1,54 +1,24 @@
-<header>
-  <h1>Case Dashboard</h1>
-</header>
+<div id="map" style="height: 400px; margin-bottom: 20px;"></div>
 
-<div class="filters">
-  <select [(ngModel)]="selectedStatus">
-    <option value="All">Status: All</option>
-    <option value="Open">Open</option>
-    <option value="Closed">Closed</option>
-    <option value="In Progress">In Progress</option>
-  </select>
-</div>
-
-<div class="summary-metrics">
-  <div class="metric">
-    <h3>Total Cases</h3>
-    <p>{{ totalCases }} <span class="trend">↑5%</span></p>
-  </div>
-  <div class="metric open">
-    <h3>Open Cases</h3>
-    <p>{{ openCases }}</p>
-  </div>
-  <div class="metric closed">
-    <h3>Closed Cases</h3>
-    <p>{{ closedCases }}</p>
-  </div>
-  <div class="metric avg-response">
-    <h3>Average Response Time</h3>
-    <p>{{ avgResponseTime }}</p>
+<div class="case-cards-container">
+  <div class="case-card" *ngFor="let caseItem of filteredCases">
+    <div class="case-header">
+      <h3>Case #{{ caseItem.id }}</h3>
+      <p>Specialization: {{ caseItem.specialization }}</p>
+    </div>
+    <div class="case-info">
+      <p><strong>Status:</strong> {{ caseItem.status }}</p>
+      <p><strong>Ambulance ID:</strong> {{ caseItem.assignedAmbulanceId }}</p>
+      <p><strong>Hospital ID:</strong> {{ caseItem.assignedHospitalId }}</p>
+      <p><strong>Estimated Duration:</strong> {{ caseItem.estimatedDuration }} minutes</p>
+      <p><strong>Estimated Distance:</strong> {{ caseItem.estimatedDistance }} km</p>
+      <p><strong>Real Duration:</strong> {{ caseItem.realDuration || 'N/A' }} minutes</p>
+      <p><strong>Created At:</strong> {{ caseItem.createdAt }}</p>
+    </div>
+    <div class="case-actions">
+      <button (click)="showRoute(caseItem.routePolyline)">Show Route</button>
+      <button (click)="editCase(caseItem)">Edit</button>
+      <button (click)="removeCase(caseItem.id)">Remove</button>
+    </div>
   </div>
 </div>
-
-<table class="cases-table">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Status</th>
-    <th>Assignee</th>
-    <th>Created Date</th>
-    <th>Resolved Date</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let caseItem of filteredCases">
-    <td>{{ caseItem.id }}</td>
-    <td>{{ caseItem.title }}</td>
-    <td>{{ caseItem.status }}</td>
-    <td>{{ caseItem.assignee }}</td>
-    <td>{{ caseItem.createdDate }}</td>
-    <td>{{ caseItem.resolvedDate }}</td>
-  </tr>
-  </tbody>
-</table>

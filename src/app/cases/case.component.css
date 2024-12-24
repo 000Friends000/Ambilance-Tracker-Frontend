@@ -5,94 +5,139 @@ body {
   background-color: #f9f9f9;
 }
 
-header {
-  background-color: #012a5b; /* Primary color */
-  color: white;
-  padding: 15px 0;
-  text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.case-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 800px;
 }
 
-.filters {
+.case-card {
   display: flex;
-  justify-content: space-around;
-  margin: 20px;
+  flex-direction: column;
   gap: 10px;
-}
-
-.filters select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1em;
-}
-
-.summary-metrics {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  margin: 20px;
-  gap: 20px;
-}
-
-.metric {
-  background: white;
-  padding: 20px;
+  padding: 16px;
+  border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: calc(25% - 40px);
-  min-width: 150px;
+  background-color: #ffffff;
 }
 
-.metric h3 {
-  margin: 0 0 10px;
-  color: #012a5b; /* Primary color */
+.case-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.metric p {
+.case-header h3 {
   margin: 0;
-  font-size: 1.5em;
+  font-size: 18px;
   font-weight: bold;
   color: #333;
 }
 
-.metric.open p {
-  color: red;
+.case-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
 }
 
-.metric.closed p {
-  color: green;
+.case-metrics {
+  display: flex;
+  gap: 16px;
 }
 
-.metric .trend {
-  font-size: 0.8em;
-  color: #012a5b; /* Primary color */
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
 }
 
-.cases-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 1em;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.metric img {
+  width: 16px;
+  height: 16px;
 }
 
-.cases-table th, .cases-table td {
-  border: 1px solid #ddd;
-  padding: 12px 15px;
-  text-align: left;
+.case-status {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-.cases-table th {
-  background-color: #012a5b; /* Primary color */
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
   color: white;
 }
 
-.cases-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+.status {
+  background-color: #f9c74f; /* Orange for "In Review" */
 }
 
-.cases-table tr:hover {
-  background-color: #f1f1f1;
+.priority {
+  background-color: #f94144; /* Red for "High" */
+}
+
+.time {
+  font-size: 12px;
+  color: #666;
+}
+
+.case-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.case-progress input[type='range'] {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.case-progress input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #012a5b;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.case-progress span {
+  font-size: 12px;
+  color: #555;
+}
+
+.case-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.case-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #012a5b;
+  color: white;
+}
+
+.case-actions button:hover {
+  background-color: #013a75;
 }

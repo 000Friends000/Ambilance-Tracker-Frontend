@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Ambulance} from "../models/ambulance.model";
 import {AmbulanceDTOModel} from "../models/ambulanceDTO.model";
@@ -25,7 +25,8 @@ export class AmbulanceService {
     return this.http.post<Ambulance>(`${this.apiUrl}`, ambulance);
   }
 
-  updateAmbulance(id: number, updatedAmbulance: Ambulance): Observable<Ambulance> {
+  updateAmbulance(id: number, updatedAmbulance: {
+  }): Observable<Ambulance> {
     return this.http.put<Ambulance>(`${this.apiUrl}/${id}`, updatedAmbulance);
   }
 
