@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import * as mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { HospitalService } from '../services/hospital.service';
+import { Hospital } from '../models/hospital.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,52 +12,51 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  availableAmbulances = 12;
-  availableHospitals = 8;
-  emergencyCases = 5;
-  apiKey = 'AIzaSyBSekYR5jzfKc5ZA2JUkPb72AWIryqcf_E'; // Replace with your actual API key
+  map!: mapboxgl.Map;
+  availableAmbulances: number = 8;
+  availableHospitals: number = 5;
+  activeCases: number = 3;
+  hospitals: Hospital[] = [];
+
+  constructor(private hospitalService: HospitalService) {}
 
   ngOnInit(): void {
-    this.loadGoogleMapsApi().then(() => {
-      this.initMap();
-    }).catch(error => {
-      console.error('Error loading Google Maps API:', error);
+    this.initializeMap();
+    this.loadHospitalData(); // Load hospital data and add markers after
+  }
+
+  initializeMap(): void {
+    this.map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/yacinemansour/cm4u3ppqk003d01sa0bch87jn',
+      center: [-7.9811, 31.6295],
+      zoom: 14,
+      accessToken: 'pk.eyJ1IjoieWFjaW5lbWFuc291ciIsImEiOiJjbTRzbTBuZmowMnAxMnBzZ3ozZWNyMTQ1In0.MuCDPa78D1cgrKqm3LDX2Q',
     });
   }
 
-  loadGoogleMapsApi(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${this.apiKey}`;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => resolve();
-      script.onerror = (error) => reject(error);
-      document.head.appendChild(script);
+  loadHospitalData(): void {
+    this.hospitalService.getAllHospitals().subscribe((data) => {
+      this.hospitals = data;
+      this.addHospitalMarkers(); // Add markers after data is loaded
     });
   }
 
-  initMap(): void {
-    const google = (window as any).google; // Add this line to resolve the google reference
+  addHospitalMarkers(): void {
+    // Add markers to the map
+    for (const feature of this.hospitals) {
+      // Create a DOM element for the marker
+      const el = document.createElement('div');
+      el.className = 'marker';
+      el.style.backgroundImage = 'url(/icons/hospital.png)';
+      el.style.width = '32px';
+      el.style.height = '32px';
+      el.style.backgroundSize = 'contain';
 
-    const map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-      center: { lat: 31.6295, lng: -7.9811 }, // Center the map on Marrakech
-      zoom: 13,
-    });
-
-    const markers = [
-      { position: { lat: 31.6295, lng: -7.9811 }, title: 'Ambulance 1', icon: 'https://cdn-icons-png.flaticon.com/128/9193/9193077.png' },
-      { position: { lat: 31.6335, lng: -7.9889 }, title: 'Ambulance 2', icon: 'https://maps.google.com/mapfiles/kml/shapes/ambulance.png' },
-      { position: { lat: 31.6200, lng: -7.9700 }, title: 'Hospital 1', icon: 'https://maps.google.com/mapfiles/kml/shapes/hospitals.png' },
-    ];
-
-    markers.forEach(markerData => {
-      new google.maps.Marker({
-        position: markerData.position,
-        map,
-        title: markerData.title,
-        icon: markerData.icon,
-      });
-    });
+      // Create and add the marker
+      new mapboxgl.Marker(el)
+        .setLngLat([feature.longitude, feature.latitude])
+        .addTo(this.map);
+    }
   }
 }

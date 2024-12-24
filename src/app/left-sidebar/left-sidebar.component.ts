@@ -24,7 +24,7 @@ export class LeftSidebarComponent {
       label: 'Cases',
     },
     {
-      routeLink: 'ambulances',
+      routeLink: 'ambulance',
       icon: 'fal fa-ambulance',
       label: 'Ambulances',
     },
