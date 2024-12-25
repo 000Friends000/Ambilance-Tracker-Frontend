@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Case } from '../models/case.model';
-
 
 @Injectable({
   providedIn: 'root',
