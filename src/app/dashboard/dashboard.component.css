@@ -49,3 +49,60 @@ header {
   font-weight: bold;
   color: #012a5b;
 }
+
+.ambulance-marker {
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.ambulance-marker:hover {
+  transform: scale(1.2);
+}
+
+.hospital-marker {
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.hospital-marker:hover {
+  transform: scale(1.2);
+}
+
+/* Popup styles */
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.ambulance-popup,
+.hospital-popup {
+  padding: 10px;
+}
+
+.ambulance-popup h3,
+.hospital-popup h3 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.ambulance-popup p,
+.hospital-popup p {
+  margin: 5px 0;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+/* Animation for marker updates */
+@keyframes markerUpdate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.marker-updated {
+  animation: markerUpdate 0.5s ease-in-out;
+}

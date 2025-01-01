@@ -1,57 +1,65 @@
-<header>
-  <h1>Ambulance Dashboard</h1>
-</header>
+<div class="page-container">
+  <div class="table-section">
+    <header>
+      <h1>Ambulance Management</h1>
+    </header>
 
-<div class="filters">
-  <select [(ngModel)]="selectedStatus">
-    <option value="All">Status: All</option>
-    <option value="Available">Available</option>
-    <option value="Unavailable">Unavailable</option>
-  </select>
-</div>
+    <div class="filters">
+      <select [(ngModel)]="selectedStatus">
+        <option value="All">Status: All</option>
+        <option value="Available">Available</option>
+        <option value="Unavailable">Unavailable</option>
+      </select>
+    </div>
 
-<div class="summary-metrics">
-  <div class="metric">
-    <h3>Total Ambulances</h3>
-    <p>{{ totalAmbulances }}</p>
+    <div class="summary-metrics">
+      <div class="metric">
+        <h3>Total Ambulances</h3>
+        <p>{{ totalAmbulances }}</p>
+      </div>
+      <div class="metric available">
+        <h3>Available</h3>
+        <p>{{ availableAmbulances }}</p>
+      </div>
+    </div>
+
+    <table class="ambulance-table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Driver Name</th>
+        <th>Available</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let ambulance of filteredAmbulances">
+        <td>{{ ambulance.id }}</td>
+        <td>{{ ambulance.driverName }}</td>
+        <td class="availability" [ngClass]="{ 'yes': ambulance.available, 'no': !ambulance.available }">
+          {{ ambulance.available ? 'Yes' : 'No' }}
+        </td>
+        <td class="location-cell">
+          <span class="location-value">{{ ambulance.latitude | number:'1.6' }}, {{ ambulance.longitude | number:'1.6' }}</span>
+        </td>
+        <td>
+          <button class="icon-button edit" (click)="startUpdate(ambulance)" title="Edit">
+            <i class="fa fa-pencil-alt"></i>
+          </button>
+          <button class="icon-button delete" (click)="confirmDelete(ambulance.id)" title="Delete">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
-  <div class="metric available">
-    <h3>Available</h3>
-    <p>{{ availableAmbulances }}</p>
+
+  <div class="map-section">
+    <div id="ambulance-map" class="map-container"></div>
   </div>
 </div>
-
-<table class="ambulance-table">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Driver Name</th>
-    <th>Available</th>
-    <th>Latitude</th>
-    <th>Longitude</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let ambulance of filteredAmbulances">
-    <td>{{ ambulance.id }}</td>
-    <td>{{ ambulance.driverName }}</td>
-    <td class="availability" [ngClass]="{ 'yes': ambulance.available, 'no': !ambulance.available }">
-      {{ ambulance.available ? 'Yes' : 'No' }}
-    </td>
-    <td>{{ ambulance.latitude }}</td>
-    <td>{{ ambulance.longitude }}</td>
-    <td>
-      <button class="icon-button edit" (click)="startUpdate(ambulance)" title="Edit">
-        <i class="fa fa-pencil-alt"></i>
-      </button>
-      <button class="icon-button delete" (click)="confirmDelete(ambulance.id)" title="Delete">
-        <i class="fa fa-trash"></i>
-      </button>
-    </td>
-  </tr>
-  </tbody>
-</table>
 
 <div class="modal" *ngIf="showModal">
   <div class="modal-content">

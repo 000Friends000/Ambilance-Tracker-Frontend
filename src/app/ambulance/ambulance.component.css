@@ -175,6 +175,108 @@ header {
   background-color: #ccc;
   color: #333;
 }
+
+.location-cell {
+  position: relative;
+  padding: 8px;
+  text-align: center;
+}
+
+.location-value {
+  display: block;
+  font-family: monospace;
+  font-size: 0.9em;
+  color: #2c3e50;
+}
+
+.location-label {
+  display: block;
+  font-size: 0.7em;
+  color: #7f8c8d;
+  margin-top: 2px;
+}
+
+/* Add a subtle animation for location updates */
+@keyframes locationUpdate {
+  0% { background-color: rgba(46, 204, 113, 0.1); }
+  100% { background-color: transparent; }
+}
+
+.location-cell.updated {
+  animation: locationUpdate 1s ease-out;
+}
+
+.page-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 40px);
+}
+
+.table-section {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+}
+
+.map-section {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  height: 100%;
+}
+
+.map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ambulance-marker {
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.ambulance-marker:hover {
+  transform: scale(1.2);
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.ambulance-popup {
+  padding: 10px;
+}
+
+.ambulance-popup h3 {
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.ambulance-popup p {
+  margin: 5px 0;
+  color: #7f8c8d;
+  font-size: 14px;
+}
+
+@keyframes markerUpdate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.marker-updated {
+  animation: markerUpdate 0.5s ease-in-out;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
