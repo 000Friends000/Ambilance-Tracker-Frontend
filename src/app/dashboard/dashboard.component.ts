@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private setupWebSocket(): void {
     this.locationSubscription = this.websocketService.getAmbulanceLocations().subscribe({
       next: (locations: AmbulanceLocation[]) => {
-        locations.forEach(location => {
+        locations.forEach((location: AmbulanceLocation) => {
           const marker = this.ambulanceMarkers[location.ambulanceId];
           if (marker) {
             marker.setLngLat([location.longitude, location.latitude]);
@@ -98,7 +98,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   loadAmbulances(): void {
     this.ambulanceService.getAllAmbulances().subscribe({
-      next: (ambulances) => {
+      next: (ambulances: Ambulance[]) => {
         console.log('Received ambulances:', ambulances);
         this.availableAmbulances = ambulances.filter(amb => amb.available).length;
         
@@ -126,7 +126,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   loadHospitalData(): void {
     this.hospitalService.getAllHospitals().subscribe({
-      next: (hospitals) => {
+      next: (hospitals: Hospital[]) => {
         console.log('Received hospitals:', hospitals);
         this.availableHospitals = hospitals.filter(h => h.available).length;
         
@@ -217,7 +217,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loadCases(): void {
     console.log('Loading cases...');
     this.caseService.getAllCases().subscribe({
-      next: (cases) => {
+      next: (cases: Case[]) => {
         console.log('Received all cases:', cases);
         // Filter out closed cases
         const activeCases = cases.filter(caseItem => caseItem.status !== 'CLOSED');
