@@ -22,16 +22,6 @@
               "mapbox-gl",
               "@mapbox/polyline"
             ],
-            "optimization": {
-              "scripts": true,
-              "styles": {
-                "minify": true,
-                "inlineCritical": false
-              },
-              "fonts": true
-            },
-            "vendorChunk": true,
-            "commonChunk": true,
             "assets": [
               {
                 "glob": "**/*",
