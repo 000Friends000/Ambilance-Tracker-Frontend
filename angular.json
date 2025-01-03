@@ -57,6 +57,18 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "cache": {
+              "enabled": true,
+              "path": "node_modules/.cache",
+              "environment": "all"
+            },
+            "optimization": {
+              "scripts": true,
+              "styles": true,
+              "fonts": false
+            }
+          },
           "configurations": {
             "production": {
               "buildTarget": "app:build:production"
