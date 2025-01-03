@@ -1,13 +1,30 @@
+# Dependencies
 node_modules
 npm-debug.log
-Dockerfile
-.dockerignore
+
+# Version control
 .git
 .gitignore
-.env
-README.md
-.angular
-dist
-test-reports
-.vscode
+
+# IDE
 .idea
+.vscode
+.editorconfig
+
+# Build and test
+dist
+coverage
+test-reports
+.angular
+
+# Environment
+.env
+.env.*
+
+# Documentation
+README.md
+LICENSE
+
+# Docker
+Dockerfile
+.dockerignore

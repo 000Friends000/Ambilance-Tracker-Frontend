@@ -22,11 +22,14 @@ FROM nginx:alpine
 # Copy the built application to nginx's serve directory
 COPY --from=build /app/dist/app/browser /usr/share/nginx/html
 
-# Copy nginx configuration (if you have a custom one)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80
-EXPOSE 80
+# Use environment variable for port
+ENV PORT=80
+
+# Expose port
+EXPOSE $PORT
 
 # Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/nginx.conf && nginx -g 'daemon off;'
