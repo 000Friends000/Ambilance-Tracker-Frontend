@@ -2,7 +2,11 @@
 nixPkgs = ['nodejs_20']
 
 [phases.install]
-cmds = ['npm install --legacy-peer-deps']
+cmds = [
+    'npm cache clean --force',
+    'npm install -g @angular/cli',
+    'npm install --force --legacy-peer-deps'
+]
 
 [phases.build]
 cmds = ['npm run build']
@@ -12,3 +16,4 @@ cmd = 'npm start'
 
 [variables]
 NODE_OPTIONS='--max-old-space-size=2048'
+NPM_CONFIG_LEGACY_PEER_DEPS='true'
