@@ -19,17 +19,27 @@ RUN npm cache clean --force && \
 # Copy the rest of the application
 COPY . .
 
-# Build the application with production configuration
-RUN npm run build -- --configuration production --aot
+# Build the application with production configuration and optimization flags
+RUN npm run build -- --configuration production --aot --build-optimizer --optimization --output-hashing all
 
 # Stage 2: Serve the application using nginx
 FROM nginx:alpine
+
+# Add bash for script support
+RUN apk add --no-cache bash
+
+# Create directory for environment script
+RUN mkdir -p /usr/share/nginx/html/assets/env/
 
 # Copy the built application from builder stage
 COPY --from=builder /app/dist/app/browser /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy environment script
+COPY env.sh /docker-entrypoint.d/40-env-config.sh
+RUN chmod +x /docker-entrypoint.d/40-env-config.sh
 
 # Expose port 80
 EXPOSE 80
