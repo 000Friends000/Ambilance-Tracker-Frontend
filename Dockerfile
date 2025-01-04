@@ -19,8 +19,8 @@ RUN npm cache clean --force && \
 # Copy the rest of the application
 COPY . .
 
-# Build the application with production configuration and optimization flags
-RUN npm run build -- --configuration production --aot --build-optimizer --optimization --output-hashing all
+# Build the application with production configuration
+RUN npm run build -- --configuration production --output-hashing all
 
 # Stage 2: Serve the application using nginx
 FROM nginx:alpine
