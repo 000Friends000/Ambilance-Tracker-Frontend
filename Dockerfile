@@ -34,24 +34,32 @@ RUN mkdir -p /usr/share/nginx/html/assets/env/
 # Copy the built application from builder stage
 COPY --from=builder /app/dist/app/browser /usr/share/nginx/html
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx configuration template
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 
 # Copy environment script
 COPY env.sh /docker-entrypoint.d/40-env-config.sh
 RUN chmod +x /docker-entrypoint.d/40-env-config.sh
 
-# Create script to update nginx configuration with Railway port
+# Create script to handle environment variables
 RUN echo $'\
 #!/bin/sh\n\
-if [ -n "$PORT" ]; then\n\
-  sed -i "s/listen 80/listen $PORT/" /etc/nginx/conf.d/default.conf\n\
-fi\n\
+\n\
+# Default port if not set\n\
+export PORT=${PORT:-80}\n\
+\n\
+# Default backend URL if not set\n\
+export BACKEND_URL=${BACKEND_URL:-http://localhost:8080}\n\
+\n\
+# Process nginx template\n\
+envsubst \\\$PORT,\\\$BACKEND_URL < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf\n\
+\n\
+# Start nginx\n\
 nginx -g "daemon off;"\n\
 ' > /start.sh && chmod +x /start.sh
 
 # Expose port (Railway will override this with $PORT)
 EXPOSE 80
 
-# Start nginx with port configuration
+# Start nginx with environment configuration
 CMD ["/start.sh"]
